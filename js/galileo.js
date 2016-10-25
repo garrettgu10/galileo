@@ -17,6 +17,8 @@ balance = 100;
 health = 100;
 reputation = 50;
 
+modal_open = false;
+
 metrics_content="";
 
 $(document).ready(function() {
@@ -56,10 +58,12 @@ function adjustTimeMaxes(){
 }
 
 function adjustMoneyMaxes(){
-  $("#science_money").prop("max",balance-eatingMoney-rent);
-  $("#science_money_max_label").html(balance-eatingMoney-rent);
-  $("#eating_money").prop("max",balance-scienceMoney-rent);
-  $("#eating_money_max_label").html(balance-scienceMoney-rent);
+  var science_money_max = (balance-eatingMoney-rent < 0? 0 :balance-eatingMoney-rent);
+  $("#science_money").prop("max",science_money_max);
+  $("#science_money_max_label").html(science_money_max);
+  var eating_money_max = (balance-scienceMoney-rent < 0? 0 :balance-scienceMoney-rent);
+  $("#eating_money").prop("max",eating_money_max);
+  $("#eating_money_max_label").html(eating_money_max);
 }
 
 function updateMetrics(){
@@ -69,6 +73,7 @@ function updateMetrics(){
 
 function resetInput(){
   decisionmins = 0;
+  $("#decision_hours").css("width", "0%");
 
   scienceHours = 0;
   $("#science_hours").val(0);
@@ -174,9 +179,11 @@ var encounters = [
 ];
 
 function applyEncounter(){
+
   $("#encounter-result-title").html("Accepted");
   $("#encounter-result-content").html(currentEncounter.apply());
   $("#encounter-result-popup").openModal({dismissible: false});
+  modal_open = true;
   balance=roundNum(balance,2);
   health=roundNum(health,2);
   papers=roundNum(papers,2);
@@ -186,9 +193,11 @@ function applyEncounter(){
 }
 
 function refuseEncounter(){
+
   $("#encounter-result-title").html("Refused");
   $("#encounter-result-content").html(currentEncounter.refuse());
   $("#encounter-result-popup").openModal({dismissible: false});
+  modal_open = true;
   balance=roundNum(balance,2);
   health=roundNum(health,2);
   papers=roundNum(papers,2);
@@ -210,6 +219,7 @@ function encounter(){
 
   $("#encounter-content").html(currentEncounter.content+"<br><br>Effect: "+currentEncounter.effect+"<br><br>Effect of Refusal: "+currentEncounter.refusalEffect);
   $("#encounter-popup").openModal({dismissible: false});
+  modal_open = true;
 }
 
 function gameOver(){
@@ -230,9 +240,11 @@ function gameOver(){
   $("#end-title").html("Game Over");
   $("#end-content").html(analysis);
   $("#end-popup").openModal({dismissible: false});
+  modal_open = true;
 }
 
 function closePopup(){
+
   if(dayNum>=8){
     gameOver();
   }
@@ -245,6 +257,8 @@ function roundNum(num, places){
 }
 
 function processDay(){
+  decisionmins = 0;
+  $("#decision_hours").css("width", "0%");
   $("#popup-title").html("Day "+dayNum);
 
   var blurb;
@@ -295,6 +309,7 @@ function processDay(){
   dayNum++;
   $("#day_label").html(dayNum);
   $("#popup").openModal({dismissible: false});
+  modal_open = true;
   updateMetrics();
 }
 
@@ -333,6 +348,9 @@ function init(){
   });
 
   setInterval(function(){
+    if(modal_open){
+      return;
+    }
     decisionmins++;
     $("#decision_hours").css("width", decisionmins/30*100+"%");
     if(decisionmins >= 30 && sleepHours != 0){

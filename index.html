@@ -34,7 +34,7 @@
         <p id="popup-content">A bunch of text</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" onclick="javascript:closePopup()" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+        <a href="#!" onclick="javascript:modal_open = false;closePopup();" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
       </div>
     </div>
 
@@ -45,8 +45,8 @@
         <p id="encounter-content">A bunch of text</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" onclick="javascript:applyEncounter()" class=" modal-action modal-close waves-effect waves-green btn-flat">YES</a>
-        <a href="#!" onclick="javascript:refuseEncounter()" class=" modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+        <a href="#!" onclick="javascript:modal_open = false;applyEncounter();" class=" modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+        <a href="#!" onclick="javascript:modal_open = false;refuseEncounter();" class=" modal-action modal-close waves-effect waves-green btn-flat">NO</a>
       </div>
     </div>
 
@@ -56,7 +56,7 @@
         <p id="encounter-result-content">A bunch of text</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" onclick="javascript:resetInput()" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+        <a href="#!" onclick="javascript:modal_open = false;resetInput();" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
       </div>
     </div>
 
