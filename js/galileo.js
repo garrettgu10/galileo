@@ -352,9 +352,9 @@ function init(){
       return;
     }
     decisionmins++;
-    $("#decision_hours").css("width", decisionmins/30*100+"%");
-    if(decisionmins >= 30 && sleepHours != 0){
-      decisionmins -= 30;
+    $("#decision_hours").css("width", decisionmins/45*100+"%");
+    if(decisionmins >= 45 && sleepHours != 0){
+      decisionmins -= 45;
       decisionHours++;
       $("#decision_hours_label").html(decisionHours);
       adjustTimeMaxes();
