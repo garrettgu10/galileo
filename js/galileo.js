@@ -99,46 +99,76 @@ var encounters = [
   {
     title: "Plagiarize",
     content: "You're in need of some cash! You obtained a design for a new optical instrument from Holland. Even if the people find out, which they probably won't, the Dutch won't be able to claim ownership of the design, since it doesn't seem to be patented.<br><br>You'll paint your device red just to be safe though.",
-    effect: "+$100 money",
+    effect: "+$50 money, risking reputation",
     refusalEffect: "Nothing",
     apply: function(){
       papers++;
       reputation-=20;
-      balance+=100;
-      return "Oops, you got caught. You lost 10% reputation as a result. However, you already earned a ton of money, so you don't really care.";
+      balance+=50;
+      return "Oops, you got caught. You lost 20% reputation as a result. However, you already earned a ton of money, so you don't really care.";
     },
     refuse: function(){
       return "Smart choice. You don't want to be risking your reputation for something small like this.";
     }
   },
   {
-    title: "Language",
-    content: "Through careful observation through your telescope, you found that Copernicus's heliocentric model of the solar system is, in fact, consistent with your data. You know that you'll be prosecuted for publishing these results, but you hope that your radical ideas will spread quickly among the people. Thus, you contemplate whether to write your paper in common language or in academic latin, which is more common for scientific papers. Would you like to write your paper in plain language?",
-    effect: "Unknown",
-    refusalEffect: "Unknown",
+    title: "Florence",
+    content: "Through careful observation through your telescope, you found that Copernicus's heliocentric model of the solar system is, in fact, consistent with your data. You wish to travel to Florence in order to present your findings to the academic persons there. Your friend warns you that despite the clarity of your evidence, the monks may still view your finding as heretical and find reasons to kill you. Will you go to Florence?",
+    effect: "Travel spending, risking reputation",
+    refusalEffect: "Risking renoun (reputation)",
     apply: function(){
-      reputation+=50;
-      balance+=150;
-      return "Congratulations! You paper sells well in the street, and you get $150 money and 50% reputation. Watch out for the authorities though. ";
+      reputation-=20;
+      health-=10;
+      balance-=10;
+      return "You spend $10 to get to Florence, but the university professors don't take it well! They totally refuse to look through your telescope and review the clear evidence, and are skeptical of your findings because they would topple over 2000 years of popular conception. You lose 20% reputation and 10% health (as a result of travel).";
     },
     refuse: function(){
-      reputation+=10;
-      return "Oops. One of your students gets the manuscript and translates it into vernacular language without your consent in order to sell it. You get nothing."
+      reputation=0;
+      return "Your work is quickly forgotten. You lose all of your reputation (for now). "
     }
   },
   {
     title: "Language",
-    content: "Through careful observation through your telescope, you found that Copernicus's heliocentric model of the solar system is, in fact, consistent with your data. You know that you'll be prosecuted for publishing these results, but you hope that your radical ideas will spread quickly among the people. Thus, you contemplate whether to write your paper in common language or in academic latin, which is more common for scientific papers. Would you like to write your paper in plain language?",
-    effect: "Unknown",
+    content: "You know that you'll be prosecuted for publishing your results, but you hope that your radical ideas will spread quickly among the people. Thus, you contemplate whether to write your paper in common language or in academic latin, which is more common for scientific papers. Would you like to write your paper in plain language?",
+    effect: "Bigger audience for you paper",
     refusalEffect: "Unknown",
     apply: function(){
-      reputation+=50;
-      balance+=150;
-      return "Congratulations! You paper sells well in the street, and you get $150 money and 50% reputation. Watch out for the authorities though. ";
+      reputation+=10;
+      balance+=50;
+      return "Congratulations! You paper sells well in the street, and you get $50 money and 10% reputation. Watch out for the authorities though. ";
     },
     refuse: function(){
-      reputation+=10;
-      return "Oops. One of your students gets the manuscript and translates it into vernacular language without your consent in order to sell it. You get nothing.";
+      return "Oops. One of your students gets the manuscript and translates it into vernacular language without your consent in order to sell it. You get nothing."
+    }
+  },
+  {
+    title: "Continuation",
+    content: "Someone warns you that the Pope (yes, the Pope) has objected against your work. The Inquisition threatens to torture and/or kill you. Will you continue to work and boldly defend your beliefs?",
+    effect: "Risking the wrath of the Catholic Church",
+    refusalEffect: "Risking reputation",
+    apply: function(){
+      reputation-=10;
+      papers+=0.2;
+      return "You continue working overtime and write another 0.2 papers. You lose some reputation (10%) on the streets due to the Pope's opposition.";
+    },
+    refuse: function(){
+      reputation-=50;
+      health-=30;
+      return "Once you stop defending your beliefs, the people stop believing in your scientific research. Your reputation drops severely (50%). You also mysteriously contract pneumonia, which causes you to lose 30% health.";
+    }
+  },
+  {
+    title: "Recant",
+    content: "The Inquisition shows you their instruments of torture, and they look really painful. They expect you to either recant at 5 o' clock or be tortured and possibly killed. Do you recant your beliefs?",
+    effect: "You probably won't die, but you risk your reputation.",
+    refusalEffect: "You're probably going to die. Probably. (In other words, you're risking your health)",
+    apply: function(){
+      reputation=0;
+      return "You recant your beliefs, and the Inquisition keeps you on house arrest for the rest of your life. Recanting your beliefs causes you to lose all your reputation.<br><br>By the way, this isn't the end of the simulation! There are still two more days left of the week.";
+    },
+    refuse: function(){
+      health=(health<1 ? health : 1);
+      return "You get tortured by the inquisition. However, through a great demonstration of perseverance, you continue to refuse to stray away from your beliefs. Fortunately, the Inquisition has mercy on you and leaves you alone for now. (Your health decreases to 1%)<br><br>By the way, this isn't the end of the simulation! There are still two more days left of the week.";
     }
   }
 ];
@@ -146,22 +176,19 @@ var encounters = [
 function applyEncounter(){
   $("#encounter-result-title").html("Accepted");
   $("#encounter-result-content").html(currentEncounter.apply());
-  $("#encounter-result-popup").openModal();
+  $("#encounter-result-popup").openModal({dismissible: false});
   balance=roundNum(balance,2);
   health=roundNum(health,2);
   papers=roundNum(papers,2);
   reputation=roundNum(reputation,2);
   resetInput();
   updateMetrics();
-  $("#encounter-result-title").html("Accepted");
-  $("#encounter-result-content").html(currentEncounter.getApplyResult());
-  $("#encounter-result-popup").openModal();
 }
 
 function refuseEncounter(){
   $("#encounter-result-title").html("Refused");
   $("#encounter-result-content").html(currentEncounter.refuse());
-  $("#encounter-result-popup").openModal();
+  $("#encounter-result-popup").openModal({dismissible: false});
   balance=roundNum(balance,2);
   health=roundNum(health,2);
   papers=roundNum(papers,2);
@@ -174,7 +201,7 @@ var currentEncounterNum = 0;
 
 function encounter(){
   if(currentEncounterNum >= encounters.length){
-    currentEncounter = encounters[encounters.length-1];
+    return;
   }else{
     currentEncounter = encounters[currentEncounterNum];
   }
@@ -182,10 +209,33 @@ function encounter(){
   $("#encounter-title").html(currentEncounter.title);
 
   $("#encounter-content").html(currentEncounter.content+"<br><br>Effect: "+currentEncounter.effect+"<br><br>Effect of Refusal: "+currentEncounter.refusalEffect);
-  $("#encounter-popup").openModal();
+  $("#encounter-popup").openModal({dismissible: false});
+}
+
+function gameOver(){
+  var finalScore = papers;
+  var analysis = "";
+  analysis += "Congratulations! Despite your hardships, you managed to write "+papers+" papers.<br>";
+  if(health<0){
+    analysis+="Unfortunately, your score is invalid because you died of health issues.";
+    finalScore = 0;
+  }else if(balance<0){
+    analysis+="Unfortunately, your score is invalid because you got caught up in deep debt.";
+    finalScore = 0;
+  }else if(reputation<0){
+    analysis+="Unfortunately, your score is invalid because your reputation is so bad that your papers are scoffed at, and have no impact as a result."
+    finalScore = 0;
+  }
+  analysis+= "<br><br><center><h3>Final Score: "+finalScore+"</h3></center>"
+  $("#end-title").html("Game Over");
+  $("#end-content").html(analysis);
+  $("#end-popup").openModal({dismissible: false});
 }
 
 function closePopup(){
+  if(dayNum>=8){
+    gameOver();
+  }
   resetInput();
   encounter();
 }
@@ -244,7 +294,7 @@ function processDay(){
   $("#popup-content").html(blurb);
   dayNum++;
   $("#day_label").html(dayNum);
-  $("#popup").openModal();
+  $("#popup").openModal({dismissible: false});
   updateMetrics();
 }
 
