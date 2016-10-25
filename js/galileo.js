@@ -128,8 +128,8 @@ var encounters = [
       return "You spend $10 to get to Florence, but the university professors don't take it well! They totally refuse to look through your telescope and review the clear evidence, and are skeptical of your findings because they would topple over 2000 years of popular conception. You lose 20% reputation and 10% health (as a result of travel).";
     },
     refuse: function(){
-      reputation=0;
-      return "Your work is quickly forgotten. You lose all of your reputation (for now). "
+      reputation=(reputation<0? reputation: reputation/2);
+      return "Your work is quickly forgotten. You lose half of your reputation. "
     }
   },
   {
@@ -266,7 +266,7 @@ function processDay(){
   var deltaPapers = roundNum(scienceHours/50 + scienceMoney/500,2);
   var deltaMoneyDueToSpending = roundNum(0- scienceMoney - eatingMoney - rent,2);
   var deltaMoneyDueToWorking = roundNum(workingHours*8,2);
-  var deltaHealthDueToSleep = roundNum((sleepHours > 8? (sleepHours-8)*5: (sleepHours-8)*15),2);
+  var deltaHealthDueToSleep = roundNum((sleepHours > 8? (sleepHours-8)*5: (sleepHours-8)*10),2);
   var deltaHealthDueToEating = roundNum(eatingHours+eatingMoney/5 > 4? ((eatingHours+(eatingMoney/10)-4)*10): ((eatingHours+(eatingMoney/5)-4)*20),2);
   var deltaReputation=roundNum((health-70)/5 + (scienceMoney-20)/20,2);
   if(sleepHours > 10){
