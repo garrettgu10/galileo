@@ -353,6 +353,7 @@ function init(){
     }
     decisionmins++;
     $("#decision_hours").css("width", decisionmins/45*100+"%");
+    $("#decision_hours_label").html(decisionHours);
     if(decisionmins >= 45 && sleepHours != 0){
       decisionmins -= 45;
       decisionHours++;
