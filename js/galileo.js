@@ -128,7 +128,7 @@ var encounters = [
       return "You spend $10 to get to Florence, but the university professors don't take it well! They totally refuse to look through your telescope and review the clear evidence, and are skeptical of your findings because they would topple over 2000 years of popular conception. You lose 20% reputation and 10% health (as a result of travel).";
     },
     refuse: function(){
-      reputation=(reputation<0? reputation: reputation/3);
+      reputation-=(reputation<0? reputation: reputation/3);
       return "Your work is quickly forgotten. You lose one third of your reputation. "
     }
   },
