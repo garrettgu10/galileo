@@ -128,14 +128,14 @@ var encounters = [
       return "You spend $10 to get to Florence, but the university professors don't take it well! They totally refuse to look through your telescope and review the clear evidence, and are skeptical of your findings because they would topple over 2000 years of popular conception. You lose 20% reputation and 10% health (as a result of travel).";
     },
     refuse: function(){
-      reputation=(reputation<0? reputation: reputation/2);
-      return "Your work is quickly forgotten. You lose half of your reputation. "
+      reputation=(reputation<0? reputation: reputation/3);
+      return "Your work is quickly forgotten. You lose one third of your reputation. "
     }
   },
   {
     title: "Language",
     content: "You know that you'll be prosecuted for publishing your results, but you hope that your radical ideas will spread quickly among the people. Thus, you contemplate whether to write your paper in common language or in academic latin, which is more common for scientific papers. Would you like to write your paper in plain language?",
-    effect: "Bigger audience for you paper",
+    effect: "Bigger audience for your paper",
     refusalEffect: "Unknown",
     apply: function(){
       reputation+=10;
@@ -168,8 +168,8 @@ var encounters = [
     effect: "You probably won't die, but you risk your reputation.",
     refusalEffect: "You're probably going to die. Probably. (In other words, you're risking your health)",
     apply: function(){
-      reputation=0;
-      return "You recant your beliefs, and the Inquisition keeps you on house arrest for the rest of your life. Recanting your beliefs causes you to lose all your reputation.<br><br>By the way, this isn't the end of the simulation! There are still two more days left of the week.";
+      reputation=(reputation<0? reputation: reputation/4);
+      return "You recant your beliefs, and the Inquisition keeps you on house arrest for the rest of your life. Recanting your beliefs causes you to lose 75% of your accumulated reputation.<br><br>By the way, this isn't the end of the simulation! There are still two more days left of the week.";
     },
     refuse: function(){
       health=(health<1 ? health : 1);
