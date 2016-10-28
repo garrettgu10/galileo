@@ -92,12 +92,12 @@ function resetInput(){
   sleepHours = 24;
   $("#sleep_hours_label").html(24);*/
 
-  /*scienceMoney = 0;
+  scienceMoney = 0;
   $("#science_money").val(0);
   $("#science_money_label").html($("#science_money").val());
   eatingMoney = 0;
   $("#eating_money").val(0);
-  $("#eating_money_label").html($("#eating_money").val());*/
+  $("#eating_money_label").html($("#eating_money").val());
   adjustMoneyMaxes();
   adjustTimeMaxes();
 
