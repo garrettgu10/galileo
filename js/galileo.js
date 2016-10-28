@@ -75,7 +75,7 @@ function resetInput(){
   decisionmins = 0;
   $("#decision_hours").css("width", "0%");
 
-  scienceHours = 0;
+  /*scienceHours = 0;
   $("#science_hours").val(0);
   $("#science_hours_label").html($("#science_hours").val());
   eatingHours = 0;
@@ -83,18 +83,21 @@ function resetInput(){
   $("#eating_hours_label").html($("#eating_hours").val());
   workingHours = 0;
   $("#working_hours").val(0);
-  $("#working_hours_label").html($("#working_hours").val());
+  $("#working_hours_label").html($("#working_hours").val());*/
+  // no resetting input
   decisionHours = 0;
+  $("#decision_hours_label").html(decisionHours);
 
+/*
   sleepHours = 24;
-  $("#sleep_hours_label").html(24);
+  $("#sleep_hours_label").html(24);*/
 
-  scienceMoney = 0;
+  /*scienceMoney = 0;
   $("#science_money").val(0);
   $("#science_money_label").html($("#science_money").val());
   eatingMoney = 0;
   $("#eating_money").val(0);
-  $("#eating_money_label").html($("#eating_money").val());
+  $("#eating_money_label").html($("#eating_money").val());*/
   adjustMoneyMaxes();
   adjustTimeMaxes();
 
