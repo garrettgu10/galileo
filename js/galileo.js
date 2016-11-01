@@ -319,7 +319,7 @@ function processDay(){
   dayNum++;
   $("#day_label").html(dayNum);
   $("#popup").openModal({dismissible: false});
-  $("#popup-content").scrollTop(0);
+  $("#modal-content").scrollTop(0);
   modal_open = true;
   updateMetrics();
 }
