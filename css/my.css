@@ -21,3 +21,9 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range] + .thumb {
   opacity:0;
 }
+
+body:after
+{
+content: url(../img/1.jpg) url(../img/2.jpg) url(../img/3.jpg) url(../img/4.jpg) url(../img/5.jpg);
+display: none;
+}

@@ -22,6 +22,9 @@ modal_open = false;
 metrics_content="";
 
 $(document).ready(function() {
+   $(document).bind("contextmenu",function(e) {
+     e.preventDefault();
+  });
   $('select').material_select();
   sleepHours = 24;
   $("#sleep_hours_label").html(24);
@@ -186,6 +189,7 @@ function applyEncounter(){
   $("#encounter-result-title").html("Accepted");
   $("#encounter-result-content").html(currentEncounter.apply());
   $("#encounter-result-popup").openModal({dismissible: false});
+  $("#encounter-result-content").scrollTop(0);
   modal_open = true;
   balance=roundNum(balance,2);
   health=roundNum(health,2);
@@ -200,6 +204,7 @@ function refuseEncounter(){
   $("#encounter-result-title").html("Refused");
   $("#encounter-result-content").html(currentEncounter.refuse());
   $("#encounter-result-popup").openModal({dismissible: false});
+  $("#encounter-result-content").scrollTop(0);
   modal_open = true;
   balance=roundNum(balance,2);
   health=roundNum(health,2);
@@ -220,8 +225,9 @@ function encounter(){
   currentEncounterNum++;
   $("#encounter-title").html(currentEncounter.title);
 
-  $("#encounter-content").html(currentEncounter.content+"<br><br>Effect: "+currentEncounter.effect+"<br><br>Effect of Refusal: "+currentEncounter.refusalEffect);
+  $("#encounter-content").html(currentEncounter.content+"<br><br>Effect: "+currentEncounter.effect+"<br><br>Effect of Refusal: "+currentEncounter.refusalEffect+"<br><br><div class = \"row s12 m6\"><center><img src=\"img/"+currentEncounterNum+".jpg\" width = \"80%\"></img></center></div>");
   $("#encounter-popup").openModal({dismissible: false});
+  $("#encounter-content").scrollTop(0);
   modal_open = true;
 }
 
@@ -243,6 +249,7 @@ function gameOver(){
   $("#end-title").html("Game Over");
   $("#end-content").html(analysis);
   $("#end-popup").openModal({dismissible: false});
+  $("#end-content").scrollTop(0);
   modal_open = true;
 }
 
@@ -312,6 +319,7 @@ function processDay(){
   dayNum++;
   $("#day_label").html(dayNum);
   $("#popup").openModal({dismissible: false});
+  $("#popup-content").scrollTop(0);
   modal_open = true;
   updateMetrics();
 }
